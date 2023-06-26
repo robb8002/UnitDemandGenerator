@@ -21,11 +21,12 @@ do this. Add one option for all classes per state, and then one class with all s
 #IMPORTS
 import random
 import numpy
+import pandas
 
 #VARIABLES
-"""
-Unit Size
-"""
+units = [platoon, company, mlr]
+states = [competition, crisis, conflict]
+
 #Base Unit Sizes
 platoon_size = 50
 company_size = 400
@@ -36,6 +37,11 @@ mlr_size = 2000
 #Conflict attrition rate is randomly selected anywhere from 1% to 3%.
 crisis_attrition_factor = random.uniform(0.01, 0.1)
 conflict_attrition_factor = random.uniform(1, 3)
+
+for unit in units:
+    for state in states:
+        unit + state + "_attrition" = unit_size
+
 
 platoon_crisis_attrition = platoon_size - (platoon_size * crisis_attrition_factor)
 company_crisis_attrition = company_size - (company_size * crisis_attrition_factor)
@@ -52,6 +58,7 @@ class ClassOneVariables:
     #Usual Request Based on MAGTF Planning
     #3 MREs per Marine per Day
     individual_mean = 3
+    for unit 
     platoon_mean = platoon_size * individual_mean
     company_mean = company_size * individual_mean
     mlr_mean = mlr_size * individual_mean
@@ -101,31 +108,56 @@ Class 9: Repair Parts
 Class 10: Non-Military Items
 """
 
+#DATAFRAMES
+class Track:
+    competition_platoon_dataframe = pandas.DataFrame({
+        "Class One": [],
+        "Class Two": [],
+        "Class Three": [],
+        "Class Five": [],
+        "Class Six": [],
+        "Class Seven": [],
+        "Class Nine": [],
+        "Class Ten": []
+
+    })
+
+
 #DEMAND GENERATION
 """
 Break each into functions.
 """
 #Competition
 def competition_demand_generator():
-    #Class One
+    print("COMPETITION")
+    #Platoon
     competition_class_one_demand_platoon = numpy.random.normal(ClassOneVariables.competition_demand_mean_platoon, ClassOneVariables.competition_demand_stdev)
+    print("Platoon, Class One:", round(competition_class_one_demand_platoon))
+    
+    #Company
     competition_class_one_demand_company = numpy.random.normal(ClassOneVariables.competition_demand_mean_company, ClassOneVariables.competition_demand_stdev)
+    print("Company, Class One:", round(competition_class_one_demand_company))
+    
+    #MLR
     competition_class_one_demand_mlr = numpy.random.normal(ClassOneVariables.competition_demand_mean_mlr, ClassOneVariables.competition_demand_stdev)
-    print("Competition: Platoon, Class One:", round(competition_class_one_demand_platoon))
-    print("Competition: Company, Class One:", round(competition_class_one_demand_company))
-    print("Competition: MLR, Class One:", round(competition_class_one_demand_mlr))
+    print("MLR, Class One:", round(competition_class_one_demand_mlr))
 
     #Class Two
 
 #Crisis
 def crisis_demand_generator():
-    #Class One
+    print("CRISIS")
+    #Platoon
     crisis_class_one_demand_platoon = numpy.random.normal(ClassOneVariables.crisis_demand_mean_platoon, ClassOneVariables.crisis_demand_stdev) - platoon_crisis_attrition
+    print("Platoon, Class One:", round(crisis_class_one_demand_platoon))
+    
+    #Company
     crisis_class_one_demand_company = numpy.random.normal(ClassOneVariables.crisis_demand_mean_company, ClassOneVariables.crisis_demand_stdev) - company_crisis_attrition
+    print("Company, Class One:", round(crisis_class_one_demand_company))
+    
+    #MLR
     crisis_class_one_demand_mlr = numpy.random.normal(ClassOneVariables.crisis_demand_mean_mlr, ClassOneVariables.crisis_demand_stdev) - mlr_crisis_attrition
-    print("crisis: Platoon, Class One:", round(crisis_class_one_demand_platoon))
-    print("crisis: Company, Class One:", round(crisis_class_one_demand_company))
-    print("crisis: MLR, Class One:", round(crisis_class_one_demand_mlr))
+    print("MLR, Class One:", round(crisis_class_one_demand_mlr))
 
 #conflict
 
