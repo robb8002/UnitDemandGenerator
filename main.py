@@ -19,21 +19,38 @@ files. This way all variables can be in their own variables.py file. Potentially
 do this. Add one option for all classes per state, and then one class with all states.
 """
 #IMPORTS
+import random
 import numpy
 
 #VARIABLES
 """
 Unit Size
 """
+#Base Unit Sizes
 platoon_size = 50
 company_size = 400
 mlr_size = 2000
+
+#Attrition Rate For Crisis and Conflict
+#Crisis attrition rate is randomly selected anywhere from 0.01% and 0.1%.
+#Conflict attrition rate is randomly selected anywhere from 1% to 3%.
+crisis_attrition_factor = random.uniform(0.01, 0.1)
+conflict_attrition_factor = random.uniform(1, 3)
+
+platoon_crisis_attrition = platoon_size - (platoon_size * crisis_attrition_factor)
+company_crisis_attrition = company_size - (company_size * crisis_attrition_factor)
+mlr_crisis_attrition = mlr_size - (company_size * crisis_attrition_factor)
+
+platoon_conflict_attrition = platoon_size - (platoon_size * conflict_attrition_factor)
+company_conflict_attrition = company_size - (company_size * conflict_attrition_factor)
+mlr_conflict_attrition = mlr_size - (mlr_size * conflict_attrition_factor)
 
 """
 Class 1: Food
 """
 class ClassOneVariables:
     #Usual Request Based on MAGTF Planning
+    #3 MREs per Marine per Day
     individual_mean = 3
     platoon_mean = platoon_size * individual_mean
     company_mean = company_size * individual_mean
@@ -41,8 +58,8 @@ class ClassOneVariables:
     
     #Demand Inflation Factor Depending on Continuum State
     competition_inflation_factor = 1
-    crisis_inflation_factor = 2
-    conflict_inflation_factor = 3
+    crisis_inflation_factor = 1.5
+    conflict_inflation_factor = 2
 
     #Competition Mean Calculations
     competition_demand_mean_platoon = competition_inflation_factor * platoon_mean
@@ -91,14 +108,26 @@ Break each into functions.
 #Competition
 def competition_demand_generator():
     #Class One
-    competition_class_one_demand_platoon = numpy.random.lognormal(ClassOneVariables.competition_demand_mean_platoon, ClassOneVariables.competition_demand_stdev)
-    competition_class_one_demand_company = numpy.random.lognormal(ClassOneVariables.competition_demand_mean_company, ClassOneVariables.competition_demand_stdev)
-    competition_class_one_demand_mlr = numpy.random.lognormal(ClassOneVariables.competition_demand_mean_mlr, ClassOneVariables.competition_demand_stdev)
+    competition_class_one_demand_platoon = numpy.random.normal(ClassOneVariables.competition_demand_mean_platoon, ClassOneVariables.competition_demand_stdev)
+    competition_class_one_demand_company = numpy.random.normal(ClassOneVariables.competition_demand_mean_company, ClassOneVariables.competition_demand_stdev)
+    competition_class_one_demand_mlr = numpy.random.normal(ClassOneVariables.competition_demand_mean_mlr, ClassOneVariables.competition_demand_stdev)
+    print("Competition: Platoon, Class One:", round(competition_class_one_demand_platoon))
+    print("Competition: Company, Class One:", round(competition_class_one_demand_company))
+    print("Competition: MLR, Class One:", round(competition_class_one_demand_mlr))
 
-    return competition_class_one_demand_platoon, competition_class_one_demand_company, competition_class_one_demand_mlr
     #Class Two
 
 #Crisis
+def crisis_demand_generator():
+    #Class One
+    crisis_class_one_demand_platoon = numpy.random.normal(ClassOneVariables.crisis_demand_mean_platoon, ClassOneVariables.crisis_demand_stdev) - platoon_crisis_attrition
+    crisis_class_one_demand_company = numpy.random.normal(ClassOneVariables.crisis_demand_mean_company, ClassOneVariables.crisis_demand_stdev) - company_crisis_attrition
+    crisis_class_one_demand_mlr = numpy.random.normal(ClassOneVariables.crisis_demand_mean_mlr, ClassOneVariables.crisis_demand_stdev) - mlr_crisis_attrition
+    print("crisis: Platoon, Class One:", round(crisis_class_one_demand_platoon))
+    print("crisis: Company, Class One:", round(crisis_class_one_demand_company))
+    print("crisis: MLR, Class One:", round(crisis_class_one_demand_mlr))
+
 #conflict
 
 print(competition_demand_generator())
+print(crisis_demand_generator())
