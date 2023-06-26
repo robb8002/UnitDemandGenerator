@@ -44,84 +44,61 @@ class ClassOneVariables:
     crisis_inflation_factor = 2
     conflict_inflation_factor = 3
 
-    #Mean Calculations
+    #Competition Mean Calculations
     competition_demand_mean_platoon = competition_inflation_factor * platoon_mean
-    competition_demand_mean_company = crisis_inflation_factor * company_mean
-    competition_demand_mean_mlr = conflict_inflation_factor * mlr_mean
+    competition_demand_mean_company = competition_inflation_factor * company_mean
+    competition_demand_mean_mlr = competition_inflation_factor * mlr_mean
 
+    #Crisis Mean Calculations
+    crisis_demand_mean_platoon = crisis_inflation_factor * platoon_mean
+    crisis_demand_mean_company = crisis_inflation_factor * company_mean
+    crisis_demand_mean_mlr = crisis_inflation_factor * mlr_mean
+
+    #Conflict Mean Calculations
+    conflict_demand_mean_platoon = conflict_inflation_factor * platoon_mean
+    conflict_demand_mean_company = conflict_inflation_factor * company_mean
+    conflict_demand_mean_mlr = conflict_inflation_factor * mlr_mean
+    
     #Standard Deviations
-    competition_demand_stdev, crisis_demand_stdev, conflict_demand_stdev = 1
+    competition_demand_stdev, crisis_demand_stdev, conflict_demand_stdev = 1, 1, 1
 
 """
 Class 2: Equipment
 """
-class ClassTwoVariables:
-    #Usual Request Based on MAGTF Planning
-    individual_mean = 3
-    platoon_mean = platoon_size * individual_mean
-    company_mean = company_size * individual_mean
-    mlr_mean = mlr_size * individual_mean
-    
-    #Demand Inflation Factor Depending on Continuum State
-    competition_inflation_factor = 1
-    crisis_inflation_factor = 2
-    conflict_inflation_factor = 3
-
-    #Mean Calculations
-    competition_demand_mean_platoon = competition_inflation_factor * platoon_mean
-    competition_demand_mean_company = crisis_inflation_factor * company_mean
-    competition_demand_mean_mlr = conflict_inflation_factor * mlr_mean
-
-    #Standard Deviations
-    competition_demand_stdev, crisis_demand_stdev, conflict_demand_stdev = 1
-
 """
 Class 3: Fuel
 """
-competition_class_three_demand_mean, competition_class_three_demand_stdev = 4, 1
-crisis_class_three_demand_mean, crisis_class_three_demand_stdev = 3, 1
-conflict_class_three_demand_mean, conflict_class_three_demand_stdev = 4, 1
-
 """
 Class 5: Ammo
 """
-competition_class_five_demand_mean, competition_class_five_demand_stdev = 2, 1
-crisis_class_five_demand_mean, crisis_class_five_demand_stdev = 3, 1
-conflict_class_five_demand_mean, conflict_class_five_demand_stdev = 4, 1
-
 """
 Class 6: Personal Items 
 """
-competition_class_six_demand_mean, competition_class_six_demand_stdev = 2, 1
-crisis_class_six_demand_mean, crisis_class_six_demand_stdev = 3, 1
-conflict_class_six_demand_mean, conflict_class_six_demand_stdev = 4, 1
-
 """
 Class 7: Major End Items
 """
-competition_class_seven_demand_mean, competition_class_seven_demand_stdev = 2, 1
-crisis_class_seven_demand_mean, crisis_class_seven_demand_stdev = 3, 1
-conflict_class_seven_demand_mean, conflict_class_seven_demand_stdev = 4, 1
-
 """
 Class 9: Repair Parts
 """
-competition_class_nine_demand_mean, competition_class_nine_demand_stdev = 2, 1
-crisis_class_nine_demand_mean, crisis_class_nine_demand_stdev = 3, 1
-conflict_class_nine_demand_mean, conflict_class_nine_demand_stdev = 4, 1
-
 """
 Class 10: Non-Military Items
 """
-competition_class_ten_demand_mean, competition_class_ten_demand_stdev = 2, 1
-crisis_class_ten_demand_mean, crisis_class_ten_demand_stdev = 3, 1
-conflict_class_ten_demand_mean, conflict_class_ten_demand_stdev = 4, 1
-
 
 #DEMAND GENERATION
 """
 Break each into functions.
 """
 #Competition
+def competition_demand_generator():
+    #Class One
+    competition_class_one_demand_platoon = numpy.random.lognormal(ClassOneVariables.competition_demand_mean_platoon, ClassOneVariables.competition_demand_stdev)
+    competition_class_one_demand_company = numpy.random.lognormal(ClassOneVariables.competition_demand_mean_company, ClassOneVariables.competition_demand_stdev)
+    competition_class_one_demand_mlr = numpy.random.lognormal(ClassOneVariables.competition_demand_mean_mlr, ClassOneVariables.competition_demand_stdev)
+
+    return competition_class_one_demand_platoon, competition_class_one_demand_company, competition_class_one_demand_mlr
+    #Class Two
+
 #Crisis
 #conflict
+
+print(competition_demand_generator())
